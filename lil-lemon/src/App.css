@@ -1,38 +1,128 @@
-.App {
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&family=Markazi+Text:wght@400;500;600;700&display=swap');
+
+/* Overall page styling */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Karla', sans-serif;
+  background-color: #FFFFFF;
+}
+
+/* App Grid Layout */
+.app-grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "footer";
+  min-height: 100vh;
+}
+
+/* Desktop Layout */
+@media (min-width: 768px) {
+  .app-grid-container {
+    grid-template-columns: max-content max-content;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header nav"
+      "main main"
+      "footer footer";
+    justify-content: center;
+    column-gap: 50px;
+  }
+}
+.header,
+.nav {
+  display: flex;
+  align-items: center;
+  padding-top:10px;
+}
+
+/* Grid Area Assignment */
+.header {
+  grid-area: header;
+}
+
+.nav {
+  grid-area: nav;
+}
+
+.main {
+  grid-area: main;
+}
+
+.footer {
+  grid-area: footer;
+  align-items: center;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Markazi Text', serif;
+  color: #000000;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Paragraphs */
+p {
+  font-family: 'Karla', sans-serif;
+  color: #495E57;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Spans */
+span {
+  font-family: 'Karla', sans-serif;
+}
+
+/* Navigation */
+/* Upper Navigation Bar */
+.nav {
+  font-family: 'Karla', sans-serif;
+}
+
+.nav ul {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 50px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-.App-link {
-  color: #61dafb;
+.nav li {
+  font-size: 16px;
+  font-weight: 600;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav a {
+  text-decoration: none;
+  color: #000000;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
 }
