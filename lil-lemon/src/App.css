@@ -243,3 +243,26 @@ img {
   height: 200px;
   object-fit: cover;
 }
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .specials-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonials-container {
+    grid-template-columns: 1fr;
+  }
+
+  .chicago {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .specials-container {
+    grid-template-columns: 1fr;
+  }
+}
