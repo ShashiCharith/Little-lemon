@@ -126,3 +126,120 @@ img {
   height: auto;
   border-radius: 10px;
 }
+
+/* Homepage */
+.homepage {
+  width: 100%;
+}
+/* Hero Section */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  background-color: #495E57;
+  padding: 30px max(5%, calc((100% - 900px) / 2));
+  align-items: center;
+}
+
+.hero-content h1 {
+  color: #F4CE14;
+  font-size: 56px;
+  margin: 0;
+}
+
+.hero-content h2 {
+  color: white;
+  font-size: 32px;
+  margin: 0;
+}
+
+.hero-content p {
+  color: white;
+  line-height: 1.5;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+/* Specials Section */
+.specials {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.specials-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.card {
+  background-color: #EDEFEE;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.card h3,
+.card p {
+  padding: 0 15px;
+}
+/* Testimonials */
+.testimonials {
+  background-color: #EDEFEE;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.testimonials-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 25px auto 0;
+}
+
+.testimonial-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.testimonial-card img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+/* Chicago Section */
+.chicago {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.chicago-images {
+  display: flex;
+  gap: 10px;
+}
+
+.chicago-images img {
+  width: 50%;
+  height: 200px;
+  object-fit: cover;
+}
