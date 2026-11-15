@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function BookingForm(props) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("17:00");
   const [guests, setGuests] = useState("1");
   const [occasion, setOccasion] = useState("Birthday");
+  const [isFormValid, setIsFormValid] = useState(false);
 
   function handleDateChange(e) {
     const selectedDate = e.target.value;
@@ -28,16 +29,19 @@ function BookingForm(props) {
     };
     props.submitForm(formData);
   }
+  useEffect(() => {
+  const isDateValid = date !== "";
+  const isTimeValid = time !== "";
+  const isGuestsValid = guests >= 1 && guests <= 10;
 
+  setIsFormValid(
+    isDateValid &&
+    isTimeValid &&
+    isGuestsValid
+  );
+}, [date, time, guests, occasion]);
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: "grid",
-        maxWidth: "200px",
-        gap: "20px"
-      }}
-    >
+    <form className="booking-form" onSubmit={handleSubmit}>
       <label htmlFor="res-date">Choose date</label>
 
       <input
@@ -45,6 +49,7 @@ function BookingForm(props) {
         id="res-date"
         value={date}
         onChange={handleDateChange}
+        required
       />
 
       <label htmlFor="res-time">Choose time</label>
@@ -53,6 +58,7 @@ function BookingForm(props) {
         id="res-time"
         value={time}
         onChange={(e) => setTime(e.target.value)}
+        required
       >
         {props.availableTimes.map((availableTime) => (
           <option key={availableTime} value={availableTime}>
@@ -69,6 +75,7 @@ function BookingForm(props) {
         min="1"
         max="10"
         value={guests}
+        required
         onChange={(e) => setGuests(e.target.value)}
       />
 
@@ -79,11 +86,12 @@ function BookingForm(props) {
         value={occasion}
         onChange={(e) => setOccasion(e.target.value)}
       >
+        <option value="">None</option>
         <option value="Birthday">Birthday</option>
         <option value="Anniversary">Anniversary</option>
       </select>
 
-      <input type="submit" value="Make Your reservation" />
+      <input type="submit" value="Make Your reservation" disabled={!isFormValid} />
     </form>
   );
 }

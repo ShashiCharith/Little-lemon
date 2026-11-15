@@ -18,46 +18,45 @@ body {
 .app-grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
-    "header"
-    "nav"
+    "topbar"
     "main"
     "footer";
   min-height: 100vh;
 }
 
-/* Desktop Layout */
-@media (min-width: 768px) {
-  .app-grid-container {
-    grid-template-columns: max-content max-content;
-    grid-template-rows: auto 1fr auto;
-    grid-template-areas:
-      "header nav"
-      "main main"
-      "footer footer";
-    justify-content: center;
-    column-gap: 50px;
-  }
+.topbar {
+  --navigation-gap: 50px;
+  grid-area: topbar;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .header,
 .nav {
   display: flex;
   align-items: center;
-  padding-top:10px;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-/* Grid Area Assignment */
-.header {
-  grid-area: header;
-}
-
-.nav {
-  grid-area: nav;
+@media (min-width: 768px) {
+  .topbar {
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: var(--navigation-gap);
+  }
 }
 
 .main {
   grid-area: main;
+  min-width: 0;
+  align-items: center;
+  text-align: center;
 }
 
 .footer {
@@ -89,26 +88,39 @@ span {
 /* Upper Navigation Bar */
 .nav {
   font-family: 'Karla', sans-serif;
+  align-items: stretch;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .nav ul {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 50px;
+  align-items: stretch;
+  gap: var(--navigation-gap);
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
 .nav li {
+  display: flex;
   font-size: 16px;
   font-weight: 600;
 }
 
 .nav a {
+  display: flex;
+  align-items: center;
   text-decoration: none;
   color: #000000;
+}
+
+.nav a.active {
+  background-color: #495E57;
+  color: #FFFFFF;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 ul {
@@ -133,36 +145,93 @@ img {
 }
 /* Hero Section */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
   background-color: #495E57;
-  padding: 30px max(5%, calc((100% - 900px) / 2));
+  padding: 16px 20px;
+}
+
+.hero-content,
+.hero-image {
+  min-width: 0;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
+  gap: 100px;
+  max-width: 815px;
+  min-height: 390px;
+  margin: 0 auto;
 }
 
 .hero-content h1 {
   color: #F4CE14;
   font-size: 56px;
+  line-height: 1;
   margin: 0;
 }
 
 .hero-content h2 {
   color: white;
   font-size: 32px;
-  margin: 0;
+  line-height: 1;
+  margin: 8px 0 0;
 }
 
 .hero-content p {
   color: white;
   line-height: 1.5;
+  margin: 16px 0 0;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  padding: 18px 30px;
+  border-radius: 8px;
+  background-color: #e7d403;
+  color: #0a0a0a;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  background-color: #9a8b04;
 }
 
 .hero-image img {
+  display: block;
   width: 100%;
-  height: 250px;
+  height: 380px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 0;
+}
+
+@media (max-width: 767px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    min-height: 0;
+    padding: 32px 0;
+  }
+
+  .hero-cta {
+    margin-top: 32px;
+  }
+
+  .hero-image img {
+    height: 260px;
+  }
 }
 /* Specials Section */
 .specials {
@@ -215,6 +284,12 @@ img {
   border-radius: 10px;
   text-align: left;
 }
+.testimonial-person {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 10px;
+}
 
 .testimonial-card img {
   width: 70px;
@@ -224,28 +299,129 @@ img {
 }
 /* Chicago Section */
 .chicago {
-  max-width: 900px;
-  margin: 50px auto;
-  padding: 20px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: 40px;
+  max-width: 815px;
+  margin: 50px auto;
+}
+
+.chicago-content {
+  text-align: left;
+}
+
+.chicago-content h2 {
+  font-size: 40px;
+  line-height: 1;
+  margin: 0;
+}
+
+.chicago-content h3 {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 6px 0 32px;
+}
+
+.chicago-content p {
+  margin: 0;
 }
 
 .chicago-images {
-  display: flex;
-  gap: 10px;
+  position: relative;
+  min-height: 360px;
 }
 
 .chicago-images img {
-  width: 50%;
-  height: 200px;
+  position: absolute;
+  width: 62%;
+  max-height: 273px;
+  aspect-ratio: 0.79;
   object-fit: cover;
+  border-radius: 0;
 }
+
+.chicago-image:first-child {
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.chicago-image:last-child {
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+.booking{
+  background-color: #495E57;
+  padding: 16px 20px;
+}
+.booking-content h1 {
+  color: #F4CE14;
+  font-size: 56px;
+  line-height: 1;
+  margin: 0;
+}
+
+.booking-content h2 {
+  color: white;
+  font-size: 32px;
+  line-height: 1;
+  margin: 8px 0 0;
+}
+.booking-title h1{
+  color: white;
+  font-size: 32px;
+  line-height: 1;
+  margin: 8px 0 0;
+}
+.booking-form {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px 12px;
+  width: min(100%, 500px);
+  margin: 24px auto;
+  text-align: left;
+}
+
+.booking-form label {
+  color: white;
+}
+
+.booking-form input:not([type="submit"]),
+.booking-form select {
+  width: 100%;
+  min-height: 46px;
+  padding: 8px 10px;
+  font: inherit;
+}
+
+.booking-form input[type="submit"] {
+  grid-column: 1 / -1;
+  min-height: 46px;
+  margin-top: 4px;
+  padding: 10px 16px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.booking-form input[type="submit"]:disabled {
+  cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
-  .hero {
-    grid-template-columns: 1fr;
+  .chicago {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin: 40px 20px;
+  }
+
+  .chicago-images {
+    width: min(100%, 360px);
+    min-height: min(76vw, 320px);
+    margin: 0 auto;
   }
 
   .specials-container {
@@ -256,12 +432,14 @@ img {
     grid-template-columns: 1fr;
   }
 
-  .chicago {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 480px) {
+  .booking-form {
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 12px 8px;
+  }
+
   .specials-container {
     grid-template-columns: 1fr;
   }

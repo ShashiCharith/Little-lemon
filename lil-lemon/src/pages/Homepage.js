@@ -5,12 +5,12 @@ import Chicago from "../Chicago";
 
 function Homepage() {
   return (
-    <>
+    <main>
       <CallToAction />
       <Specials />
       <CustomersSay />
       <Chicago />
-    </>
+    </main>
   );
 }
 

@@ -8,15 +8,19 @@ function CustomersSay() {
       <div className="testimonials-container">
         <article className="testimonial-card">
           <h3>★★★★★</h3>
+        <div className="testimonial-person">
           <img src={customer1} alt="Customer" />
         <p>John</p>
+        </div>
         <p>The food was delicious and the service was excellent!</p>
       </article>
 
         <article className="testimonial-card">
           <h3>★★★★★</h3>
-          <img src={customer2} alt="Customer" />
-          <p>Sarah</p>
+          <div className="testimonial-person">
+            <img src={customer2} alt="Customer" />
+            <p>Sarah</p>
+          </div>
           <p>A wonderful restaurant with a great atmosphere.</p>
         </article>
       </div>

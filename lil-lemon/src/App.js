@@ -8,8 +8,10 @@ function App() {
   return (
     <BrowserRouter>
     <div className="app-grid-container">
-    <Header />
-    <Nav />
+    <div className="topbar">
+      <Header />
+      <Nav />
+    </div>
     <Main />
     <Footer />
     </div>
