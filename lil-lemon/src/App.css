@@ -411,6 +411,12 @@ img {
   cursor: not-allowed;
 }
 
+.form-error {
+  color: #b00020;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
 @media (max-width: 768px) {
   .chicago {
     grid-template-columns: minmax(0, 1fr);

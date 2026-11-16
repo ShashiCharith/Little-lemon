@@ -3,6 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import BookingPage from "./pages/BookingPage";
 import ConfirmedBooking from "./ConfirmedBooking";
+import About from "./pages/About";
+import Menu from "./pages/Menu";
+import OrderOnline from "./pages/OrderOnline";
+import Login from "./pages/Login";
 import { useNavigate } from "react-router-dom";
 
 /* global fetchAPI, submitAPI */
@@ -29,11 +33,21 @@ function Main() {
     initializeTimes
   );
   const navigate = useNavigate();
-  const submitForm = (formData) => {
-  if (submitAPI(formData)) {
-    navigate("/confirmed");
+  
+const submitForm = (formData) => {
+  try {
+    if (submitAPI(formData)) {
+      navigate("/confirmed");
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error("Booking submission failed:", error);
+    return false;
   }
 };
+
   return (
     <main className="main">
       <Routes>
@@ -53,6 +67,10 @@ function Main() {
           path="/confirmed"
           element={<ConfirmedBooking />}
             />
+        <Route path="/about" element={<About />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/order-online" element={<OrderOnline />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </main>
   );

@@ -1,25 +1,65 @@
+
 import { useState, useEffect } from "react";
+
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
 
 function BookingForm(props) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("17:00");
   const [guests, setGuests] = useState("1");
   const [occasion, setOccasion] = useState("Birthday");
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const availableTimes = props.availableTimes ?? [];
+  const minDate = getTodayDate();
+
+  // Keep the selected time within the available times.
+  useEffect(() => {
+    if (!availableTimes.includes(time)) {
+      setTime(availableTimes[0] || "");
+    }
+  }, [availableTimes, time]);
+
+  // Validate the form values.
+  const isDateValid = date !== "" && date >= minDate;
+  const isTimeValid = availableTimes.includes(time);
+  const isGuestsValid =
+    Number.isInteger(Number(guests)) &&
+    Number(guests) >= 1 &&
+    Number(guests) <= 10;
+
+  const isFormValid =
+    isDateValid && isTimeValid && isGuestsValid;
 
   function handleDateChange(e) {
     const selectedDate = e.target.value;
 
     setDate(selectedDate);
+    setSubmitError("");
 
-    props.dispatch({
+    if (selectedDate) {
+      props.dispatch({
       type: "UPDATE_TIMES",
       date: selectedDate
-    });
+      });
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+    setSubmitError("");
+
+    if (!isFormValid) {
+      setSubmitError("Please check your booking details.");
+      return;
+    }
 
     const formData = {
       date,
@@ -27,60 +67,66 @@ function BookingForm(props) {
       guests,
       occasion
     };
-    props.submitForm(formData);
-  }
-  useEffect(() => {
-  const isDateValid = date !== "";
-  const isTimeValid = time !== "";
-  const isGuestsValid = guests >= 1 && guests <= 10;
 
-  setIsFormValid(
-    isDateValid &&
-    isTimeValid &&
-    isGuestsValid
-  );
-}, [date, time, guests, occasion]);
+    const success = props.submitForm(formData);
+
+    if (success === false) {
+      setSubmitError(
+        "Sorry, we couldn't complete your reservation. Please try again."
+      );
+    }
+  }
+
   return (
     <form className="booking-form" onSubmit={handleSubmit}>
       <label htmlFor="res-date">Choose date</label>
-
       <input
         type="date"
         id="res-date"
         value={date}
+        min={minDate}
         onChange={handleDateChange}
         required
       />
 
       <label htmlFor="res-time">Choose time</label>
-
       <select
         id="res-time"
         value={time}
-        onChange={(e) => setTime(e.target.value)}
+        onChange={(e) => {
+          setTime(e.target.value);
+          setSubmitError("");
+        }}
         required
+        disabled={availableTimes.length === 0}
       >
-        {props.availableTimes.map((availableTime) => (
-          <option key={availableTime} value={availableTime}>
-            {availableTime}
-          </option>
-        ))}
+        {availableTimes.length === 0 ? (
+          <option value="">No available times</option>
+        ) : (
+          availableTimes.map((availableTime) => (
+            <option key={availableTime} value={availableTime}>
+              {availableTime}
+            </option>
+          ))
+        )}
       </select>
 
       <label htmlFor="guests">Number of guests</label>
-
       <input
         type="number"
         id="guests"
         min="1"
         max="10"
+        step="1"
         value={guests}
         required
-        onChange={(e) => setGuests(e.target.value)}
+        onChange={(e) => {
+          setGuests(e.target.value);
+          setSubmitError("");
+        }}
       />
 
       <label htmlFor="occasion">Occasion</label>
-
       <select
         id="occasion"
         value={occasion}
@@ -91,7 +137,17 @@ function BookingForm(props) {
         <option value="Anniversary">Anniversary</option>
       </select>
 
-      <input type="submit" value="Make Your reservation" disabled={!isFormValid} />
+      {submitError && (
+        <p className="form-error" role="alert">
+          {submitError}
+        </p>
+      )}
+
+      <input
+        type="submit"
+        value="Make Your reservation"
+        disabled={!isFormValid}
+      />
     </form>
   );
 }
