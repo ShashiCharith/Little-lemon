@@ -87,7 +87,14 @@ function BookingForm(props) {
         min={minDate}
         onChange={handleDateChange}
         required
+        aria-invalid={date !== "" && !isDateValid}
+        aria-describedby="date-error"
       />
+      {date !== "" && !isDateValid && (
+      <p id="date-error" role="alert">
+      Please select today or a future date.
+      </p>
+    )}
 
       <label htmlFor="res-time">Choose time</label>
       <select
@@ -100,6 +107,11 @@ function BookingForm(props) {
         required
         disabled={availableTimes.length === 0}
       >
+        {availableTimes.length === 0 && (
+        <p role="status">
+        No booking times are currently available for this date.
+        </p>
+        )}
         {availableTimes.length === 0 ? (
           <option value="">No available times</option>
         ) : (
@@ -124,7 +136,14 @@ function BookingForm(props) {
           setGuests(e.target.value);
           setSubmitError("");
         }}
+        aria-invalid={guests !== "" && !isGuestsValid}
+        aria-describedby="guests-error"
       />
+      {!isGuestsValid && (
+      <p id="guests-error" role="alert">
+      Please enter a whole number between 1 and 10.
+      </p>
+      )}
 
       <label htmlFor="occasion">Occasion</label>
       <select
