@@ -2,7 +2,7 @@ import logo from './assets/Logo.svg';
 function Footer(){
     return(
         <footer className="footer">
-            <p>© 2024 Lil Lemon. All rights reserved.</p>
+            <p>© 2024 Little Lemon. All rights reserved.</p>
             <img src={logo} alt="Little Lemon Logo" />
             <nav>
                 <ul>
